@@ -1,0 +1,16 @@
+---
+apiVersion: compute.crossplane.io/v1alpha1
+kind: KubernetesCluster
+metadata:
+  name: example-gke
+  labels:
+    example: "true"
+  annotations:
+    crossplane.io/external-name: example-gke
+spec:
+  resourceRef:
+    apiVersion: container.gcp.crossplane.io/v1beta1
+    kind: GKECluster
+    name: example-gke-fxkk6
+  writeConnectionSecretToRef:
+    name: k8scluster
