@@ -14,25 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package controller
-
-import (
-	ctrl "sigs.k8s.io/controller-runtime"
-
-	"github.com/crossplane/crossplane-runtime/pkg/logging"
-
-	"github.com/crossplane/provider-nop/pkg/controller/iam"
-)
-
-// Setup creates all GCP controllers with the supplied logger and adds them to
-// the supplied manager.
-func Setup(mgr ctrl.Manager, l logging.Logger) error {
-	for _, setup := range []func(ctrl.Manager, logging.Logger) error{
-		iam.SetupServiceAccount,
-	} {
-		if err := setup(mgr, l); err != nil {
-			return err
-		}
-	}
-	return nil
-}
+// Package v1alpha1 contains a no-op managed resource.
+// +kubebuilder:object:generate=true
+// +groupName=nop.crossplane.io
+// +versionName=v1alpha1
+package v1alpha1

@@ -6,4 +6,4 @@ metadata:
   namespace: crossplane-system
 spec:
   source: localhost:5000
-  package: "crossplane/provider-nop"
+  package: "negz/provider-nop"

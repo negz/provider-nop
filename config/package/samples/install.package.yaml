@@ -5,4 +5,4 @@ metadata:
   name: provider-nop
   namespace: crossplane-system
 spec:
-  package: "crossplane/provider-nop:master"
+  package: "negz/provider-nop:master"

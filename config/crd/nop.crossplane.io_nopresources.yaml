@@ -6,7 +6,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.2.4
   creationTimestamp: null
-  name: serviceaccounts.iam.gcp.crossplane.io
+  name: nopresources.nop.crossplane.io
 spec:
   additionalPrinterColumns:
   - JSONPath: .status.conditions[?(@.type=='Ready')].status
@@ -15,28 +15,20 @@ spec:
   - JSONPath: .status.conditions[?(@.type=='Synced')].status
     name: SYNCED
     type: string
-  - JSONPath: .spec.forProvider.displayName
-    name: DISPLAYNAME
-    type: string
-  - JSONPath: .status.atProvider.email
-    name: EMAIL
-    type: string
-  - JSONPath: .status.atProvider.disabled
-    name: DISABLED
-    type: boolean
-  group: iam.gcp.crossplane.io
+  group: nop.crossplane.io
   names:
-    kind: ServiceAccount
-    listKind: ServiceAccountList
-    plural: serviceaccounts
-    singular: serviceaccount
+    kind: NopResource
+    listKind: NopResourceList
+    plural: nopresources
+    singular: nopresource
   scope: Cluster
   subresources:
     status: {}
   validation:
     openAPIV3Schema:
-      description: ServiceAccount is a managed resource that represents a Google IAM
-        Service Account.
+      description: NopResource is a managed resource that does nothing. It can be
+        used to satisfy a composite resource when testing. The resource will immediately
+        become ready when it is created.
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +43,7 @@ spec:
         metadata:
           type: object
         spec:
-          description: ServiceAccountSpec defines the desired state of a ServiceAccount.
+          description: NopResourceSpec defines the desired state of a NopResource.
           properties:
             claimRef:
               description: ClaimReference specifies the resource claim to which this
@@ -130,23 +122,6 @@ spec:
                   description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                   type: string
               type: object
-            forProvider:
-              description: ServiceAccountParameters defines parameters for a desired
-                IAM ServiceAccount https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts
-                The name of the service account (ie the `accountId` parameter of the
-                Create call) is determined by the value of the `crossplane.io/external-name`
-                annotation. Unless overridden by the user, this annotation is automatically
-                populated with the value of the `metadata.name` attribute.
-              properties:
-                description:
-                  description: Description is an optional user-specified opaque description
-                    of the service account. Must be less than or equal to 256 characters.
-                  type: string
-                displayName:
-                  description: DisplayName is an optional user-specified name for
-                    the service account. Must be less than or equal to 100 characters.
-                  type: string
-              type: object
             providerRef:
               description: ProviderReference specifies the provider that will be used
                 to create, observe, update, and delete this managed resource.
@@ -217,47 +192,11 @@ spec:
               - namespace
               type: object
           required:
-          - forProvider
           - providerRef
           type: object
         status:
-          description: ServiceAccountStatus represents the observed state of a ServiceAccount.
+          description: NopResourceStatus represents the observed state of a NopResource.
           properties:
-            atProvider:
-              description: ServiceAccountObservation is used to show the observed
-                state of the ServiceAccount resource on GCP. All fields in this structure
-                should only be populated from GCP responses; any changes made to the
-                k8s resource outside of the crossplane gcp controller will be ignored
-                and overwritten.
-              properties:
-                disabled:
-                  description: Disabled is a bool indicating if the service account
-                    is disabled. The field is currently in alpha phase.
-                  type: boolean
-                email:
-                  description: Email is the the email address of the service account.
-                    This matches the EMAIL field you would see using `gcloud iam service-accounts
-                    list`
-                  type: string
-                name:
-                  description: 'Name is the "relative resource name" of the service
-                    account in the following format: projects/{PROJECT_ID}/serviceAccounts/{external-name}.
-                    part of https://godoc.org/google.golang.org/genproto/googleapis/iam/admin/v1#ServiceAccount
-                    not to be confused with CreateServiceAccountRequest.Name aka ServiceAccountParameters.ProjectName'
-                  type: string
-                oauth2ClientId:
-                  description: OAuth2ClientId is the value GCP will use in conjunction
-                    with the OAuth2 clientconfig API to make three legged OAuth2 (3LO)
-                    flows to access the data of Google users.
-                  type: string
-                projectId:
-                  description: ProjectID is the id of the project that owns the service
-                    account.
-                  type: string
-                uniqueId:
-                  description: The unique and stable id of the service account.
-                  type: string
-              type: object
             bindingPhase:
               description: Phase represents the binding phase of a managed resource
                 or claim. Unbindable resources cannot be bound, typically because

@@ -25,15 +25,14 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
-	crossplaneapis "github.com/crossplane/crossplane/apis"
 
-	"github.com/crossplane/provider-nop/apis"
-	"github.com/crossplane/provider-nop/pkg/controller"
+	"github.com/negz/provider-nop/apis/v1alpha1"
+	"github.com/negz/provider-nop/pkg/controller"
 )
 
 func main() {
 	var (
-		app        = kingpin.New(filepath.Base(os.Args[0]), "GCP support for Crossplane.").DefaultEnvars()
+		app        = kingpin.New(filepath.Base(os.Args[0]), "A provider of no-op managed resources for Crossplane.").DefaultEnvars()
 		debug      = app.Flag("debug", "Run with debug logging.").Short('d').Bool()
 		syncPeriod = app.Flag("sync", "Controller manager sync period such as 300ms, 1.5h, or 2h45m").Short('s').Default("1h").Duration()
 	)
@@ -56,8 +55,7 @@ func main() {
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{SyncPeriod: syncPeriod})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
 
-	kingpin.FatalIfError(crossplaneapis.AddToScheme(mgr.GetScheme()), "Cannot add core Crossplane APIs to scheme")
-	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add GCP APIs to scheme")
-	kingpin.FatalIfError(controller.Setup(mgr, log), "Cannot setup GCP controllers")
+	kingpin.FatalIfError(v1alpha1.SchemeBuilder.AddToScheme(mgr.GetScheme()), "Cannot add no-op APIs to scheme")
+	kingpin.FatalIfError(controller.SetupNopResource(mgr, log), "Cannot setup no-op controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }

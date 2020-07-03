@@ -24,8 +24,8 @@ import (
 )
 
 // Package type metadata.
-const (
-	Group   = "iam.gcp.crossplane.io"
+var (
+	Group   = "nop.crossplane.io"
 	Version = "v1alpha1"
 )
 
@@ -37,14 +37,14 @@ var (
 	SchemeBuilder = &scheme.Builder{GroupVersion: SchemeGroupVersion}
 )
 
-// ServiceAccount type metadata.
+// NopResource type metadata.
 var (
-	ServiceAccountKind             = reflect.TypeOf(ServiceAccount{}).Name()
-	ServiceAccountGroupKind        = schema.GroupKind{Group: Group, Kind: ServiceAccountKind}.String()
-	ServiceAccountKindAPIVersion   = ServiceAccountKind + "." + SchemeGroupVersion.String()
-	ServiceAccountGroupVersionKind = SchemeGroupVersion.WithKind(ServiceAccountKind)
+	NopResourceKind             = reflect.TypeOf(NopResource{}).Name()
+	NopResourceGroupKind        = schema.GroupKind{Group: Group, Kind: NopResourceKind}.String()
+	NopResourceKindAPIVersion   = NopResourceKind + "." + SchemeGroupVersion.String()
+	NopResourceGroupVersionKind = SchemeGroupVersion.WithKind(NopResourceKind)
 )
 
 func init() {
-	SchemeBuilder.Register(&ServiceAccount{}, &ServiceAccountList{})
+	SchemeBuilder.Register(&NopResource{}, &NopResourceList{})
 }
