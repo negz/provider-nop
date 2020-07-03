@@ -1,0 +1,73 @@
+---
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: InfrastructureDefinition
+metadata:
+  name: sqlinstances.example.org
+spec:
+  defaultCompositionRef:
+    name: nop.sqlinstances.example.org
+  connectionSecretKeys:
+  - username
+  - password
+  - endpoint
+  crdSpecTemplate:
+    group: example.org
+    version: v1alpha1
+    names:
+      kind: SQLInstance
+      listKind: SQLInstanceList
+      plural: sqlinstances
+      singular: sqlinstance
+    validation:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  storageGB:
+                    description: Desired storage size in GB.
+                    type: integer
+                  engineVersion:
+                    description: SQL engine and version.
+                    type: string
+---
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: Composition
+metadata:
+  name: nop.sqlinstances.example.org
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  reclaimPolicy: Delete
+  from:
+    apiVersion: example.org/v1alpha1
+    kind: SQLInstance
+  to:
+    - base:
+        apiVersion: nop.crossplane.io/v1alpha1
+        kind: NopResource
+        spec:
+          providerRef:
+            name: nop-provider
+          writeConnectionSecretToRef:
+            namespace: crossplane-system
+            name: nop-example-resource
+      patches:
+        - fromFieldPath: spec.parameters.engineVersion
+          toFieldPath: metadata.annotations[nop.crossplane.io/engineVersion]
+        - fromFieldPath: spec.parameters.storageGB
+          toFieldPath: metadata.annotations[nop.crossplane.io/storageGB]
+          transforms:
+          - type: string
+            string:
+              fmt: "%d"
+      connectionDetails:
+      - name: username
+        value: fakeuser
+      - name: password
+        value: verysecurepassword
+      - name: endpoint
+        value: 127.0.0.1

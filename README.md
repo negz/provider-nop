@@ -1,69 +1,75 @@
 # provider-nop
 
-## Overview
+`provider-nop` is a Crossplane infrastructure provider that does nothing. It
+provides one managed resource - a `NopResource` that does not orchestrate any
+external system and that becomes ready as soon as it is created.
 
-`provider-nop` is the Crossplane infrastructure provider for the [Google Cloud
-Platform](https://cloud.google.com). The provider that is built from the source
-code in this repository can be installed into a Crossplane control plane and
-adds the following new functionality:
+The main value of a `NopResource` is that it can be used to create a Crossplane
+`Composition` that can satisfy any kind of composite infrastructure resource by
+doing nothing. This can be useful for systems that automatically create a real
+composite resource (one that composes real cloud infrastructure) when running in
+production, but that wish to avoid creating real infrastructure when running
+in development. It can also be useful for developing and testing Crossplane's
+support for Composition itself.
 
-* Custom Resource Definitions (CRDs) that model GCP infrastructure and services
-  (e.g. [CloudSQL](https://cloud.google.com/sql/), [GKE
-  clusters](https://cloud.google.com/kubernetes-engine/), etc.)
-* Controllers to provision these resources in GCP based on the users desired
-  state captured in CRDs they create
-* Implementations of Crossplane's portable resource abstractions, enabling GCP
-  resources to fulfill a user's general need for cloud services
+The below `Composition` satisfies the `SQLInstance` composite resource kind by
+by composing a `NopResource`. When an `SQLInstance` is created it will become
+ready and write fake data to a connection secret.
 
-## Getting Started and Documentation
+```yaml
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: Composition
+metadata:
+  name: nop.sqlinstances.example.org
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  reclaimPolicy: Delete
+  from:
+    apiVersion: example.org/v1alpha1
+    kind: SQLInstance
+  to:
+    - base:
+        apiVersion: nop.crossplane.io/v1alpha1
+        kind: NopResource
+        spec:
+          # Like all managed resources the NopResource requires you configure a
+          # provider. It ignores the configured value, and does not actually use
+          # a provider.
+          providerRef:
+            name: nop-provider
+          # Simulating connection details (see connectionDetails below) works
+          # only when the NopResource writes a connection secret. The supplied
+          # connection secret will be written, but empty.
+          writeConnectionSecretToRef:
+            namespace: crossplane-system
+            name: nop-example-resource
+      patches:
+        # You can patch a NopResource, but it doesn't have any spec fields of
+        # interest. In this case we copy the SQLInstance's spec fields to
+        # annotations of the NopResource.
+        - fromFieldPath: spec.parameters.engineVersion
+          toFieldPath: metadata.annotations[nop.crossplane.io/engineVersion]
+        - fromFieldPath: spec.parameters.storageGB
+          toFieldPath: metadata.annotations[nop.crossplane.io/storageGB]
+          transforms:
+          - type: string
+            string:
+              fmt: "%d"
+      # You can simulate connection details being returned by the NopResource by
+      # simply providing fake, static details.
+      connectionDetails:
+      - name: username
+        value: fakeuser
+      - name: password
+        value: verysecurepassword
+      - name: endpoint
+        value: 127.0.0.1
+```
 
-For getting started guides, installation, deployment, and administration, see
-our [Documentation](https://crossplane.io/docs/latest).
+You can try the above example by running the following commands:
 
-## Contributing
-
-provider-nop is a community driven project and we welcome contributions. See the
-Crossplane
-[Contributing](https://github.com/crossplane/crossplane/blob/master/CONTRIBUTING.md)
-guidelines to get started.
-
-## Report a Bug
-
-For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/negz/provider-nop/issues).
-
-## Contact
-
-Please use the following to reach members of the community:
-
-* Slack: Join our [slack channel](https://slack.crossplane.io)
-* Forums:
-  [crossplane-dev](https://groups.google.com/forum/#!forum/crossplane-dev)
-* Twitter: [@crossplane_io](https://twitter.com/crossplane_io)
-* Email: [info@crossplane.io](mailto:info@crossplane.io)
-
-## Roadmap
-
-provider-nop goals and milestones are currently tracked in the Crossplane
-repository. More information can be found in
-[ROADMAP.md](https://github.com/crossplane/crossplane/blob/master/ROADMAP.md).
-
-## Governance and Owners
-
-provider-nop is run according to the same
-[Governance](https://github.com/crossplane/crossplane/blob/master/GOVERNANCE.md)
-and [Ownership](https://github.com/crossplane/crossplane/blob/master/OWNERS.md)
-structure as the core Crossplane project.
-
-## Code of Conduct
-
-provider-nop adheres to the same [Code of
-Conduct](https://github.com/crossplane/crossplane/blob/master/CODE_OF_CONDUCT.md)
-as the core Crossplane project.
-
-## Licensing
-
-provider-nop is under the Apache 2.0 license.
-
-[![FOSSA
-Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcrossplane%2Fprovider-nop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcrossplane%2Fprovider-nop?ref=badge_large)
+```bash
+kubectl apply -f https://raw.githubusercontent.com/negz/provider-nop/master/examples/clusterrole.yaml
+kubectl apply -f https://raw.githubusercontent.com/negz/provider-nop/master/examples/definition.yaml
+kubectl apply -f https://raw.githubusercontent.com/negz/provider-nop/master/examples/sqlinstance.yaml
+```

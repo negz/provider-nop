@@ -1,0 +1,22 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sqlinstances.example.org
+  labels:
+    rbac.crossplane.io/aggregate-to-crossplane: "true"
+rules:
+- apiGroups:
+  - example.org
+  resources:
+  - sqlinstances
+  - sqlinstances/status
+  verbs:
+  - "*"
+- apiGroups:
+  - nop.crossplane.io
+  resources:
+  - nopresources
+  - nopresources/status
+  verbs:
+  - "*"

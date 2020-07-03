@@ -1,0 +1,12 @@
+---
+apiVersion: example.org/v1alpha1
+kind: SQLInstance
+metadata:
+  name: nop-example
+spec:
+  parameters:
+    storageGB: 20
+    engineVersion: MYSQL_5_7
+  writeConnectionSecretToRef:
+    namespace: default
+    name: nop-example
