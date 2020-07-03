@@ -20,16 +20,16 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	cachev1beta1 "github.com/crossplane/provider-gcp/apis/cache/v1beta1"
-	computev1alpha3 "github.com/crossplane/provider-gcp/apis/compute/v1alpha3"
-	computev1beta1 "github.com/crossplane/provider-gcp/apis/compute/v1beta1"
-	containerv1alpha1 "github.com/crossplane/provider-gcp/apis/container/v1alpha1"
-	containerv1beta1 "github.com/crossplane/provider-gcp/apis/container/v1beta1"
-	databasev1beta1 "github.com/crossplane/provider-gcp/apis/database/v1beta1"
-	iam "github.com/crossplane/provider-gcp/apis/iam/v1alpha1"
-	servicenetworkingv1beta1 "github.com/crossplane/provider-gcp/apis/servicenetworking/v1beta1"
-	storagev1alpha3 "github.com/crossplane/provider-gcp/apis/storage/v1alpha3"
-	gcpv1alpha3 "github.com/crossplane/provider-gcp/apis/v1alpha3"
+	cachev1beta1 "github.com/crossplane/provider-nop/apis/cache/v1beta1"
+	computev1alpha3 "github.com/crossplane/provider-nop/apis/compute/v1alpha3"
+	computev1beta1 "github.com/crossplane/provider-nop/apis/compute/v1beta1"
+	containerv1alpha1 "github.com/crossplane/provider-nop/apis/container/v1alpha1"
+	containerv1beta1 "github.com/crossplane/provider-nop/apis/container/v1beta1"
+	databasev1beta1 "github.com/crossplane/provider-nop/apis/database/v1beta1"
+	iam "github.com/crossplane/provider-nop/apis/iam/v1alpha1"
+	servicenetworkingv1beta1 "github.com/crossplane/provider-nop/apis/servicenetworking/v1beta1"
+	storagev1alpha3 "github.com/crossplane/provider-nop/apis/storage/v1alpha3"
+	gcpv1alpha3 "github.com/crossplane/provider-nop/apis/v1alpha3"
 )
 
 func init() {

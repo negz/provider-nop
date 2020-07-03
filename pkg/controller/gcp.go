@@ -21,13 +21,13 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 
-	"github.com/crossplane/provider-gcp/pkg/controller/cache"
-	"github.com/crossplane/provider-gcp/pkg/controller/compute"
-	"github.com/crossplane/provider-gcp/pkg/controller/container"
-	"github.com/crossplane/provider-gcp/pkg/controller/database"
-	"github.com/crossplane/provider-gcp/pkg/controller/iam"
-	"github.com/crossplane/provider-gcp/pkg/controller/servicenetworking"
-	"github.com/crossplane/provider-gcp/pkg/controller/storage"
+	"github.com/crossplane/provider-nop/pkg/controller/cache"
+	"github.com/crossplane/provider-nop/pkg/controller/compute"
+	"github.com/crossplane/provider-nop/pkg/controller/container"
+	"github.com/crossplane/provider-nop/pkg/controller/database"
+	"github.com/crossplane/provider-nop/pkg/controller/iam"
+	"github.com/crossplane/provider-nop/pkg/controller/servicenetworking"
+	"github.com/crossplane/provider-nop/pkg/controller/storage"
 )
 
 // Setup creates all GCP controllers with the supplied logger and adds them to

@@ -24,7 +24,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"google.golang.org/api/googleapi"
 
-	"github.com/crossplane/provider-gcp/apis/compute/v1beta1"
+	"github.com/crossplane/provider-nop/apis/compute/v1beta1"
 )
 
 // IsErrorNotFound gets a value indicating whether the given error represents a "not found" response from the Google API

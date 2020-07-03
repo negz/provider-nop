@@ -31,8 +31,8 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/meta"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 
-	"github.com/crossplane/provider-gcp/apis/storage/v1alpha3"
-	gcpstorage "github.com/crossplane/provider-gcp/pkg/clients/storage"
+	"github.com/crossplane/provider-nop/apis/storage/v1alpha3"
+	gcpstorage "github.com/crossplane/provider-nop/pkg/clients/storage"
 )
 
 type operations interface {

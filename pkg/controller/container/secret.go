@@ -28,7 +28,7 @@ import (
 	"github.com/crossplane/crossplane/apis/compute/v1alpha1"
 	workloadv1alpha1 "github.com/crossplane/crossplane/apis/workload/v1alpha1"
 
-	"github.com/crossplane/provider-gcp/apis/container/v1beta1"
+	"github.com/crossplane/provider-nop/apis/container/v1beta1"
 )
 
 // SetupGKEClusterSecret adds a controller that propagates GKECluster connection

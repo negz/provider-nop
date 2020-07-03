@@ -1,7 +1,7 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME := provider-gcp
+PROJECT_NAME := provider-nop
 PROJECT_REPO := github.com/crossplane/$(PROJECT_NAME)
 
 PLATFORMS ?= linux_amd64 linux_arm64
@@ -50,7 +50,7 @@ PACKAGE_REGISTRY=$(PACKAGE)/.registry
 PACKAGE_REGISTRY_SOURCE=config/package/manifests
 
 DOCKER_REGISTRY = crossplane
-IMAGES = provider-gcp
+IMAGES = provider-nop
 -include build/makelib/image.mk
 
 # ====================================================================================

@@ -17,10 +17,11 @@ limitations under the License.
 package v1alpha1
 
 import (
-	runtimev1alpha1 "github.com/crossplane/crossplane-runtime/apis/core/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/crossplane/provider-gcp/apis/container/v1beta1"
+	runtimev1alpha1 "github.com/crossplane/crossplane-runtime/apis/core/v1alpha1"
+
+	"github.com/crossplane/provider-nop/apis/container/v1beta1"
 )
 
 // NodePool states.

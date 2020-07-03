@@ -23,7 +23,7 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/pkg/reference"
 
-	"github.com/crossplane/provider-gcp/apis/compute/v1beta1"
+	"github.com/crossplane/provider-nop/apis/compute/v1beta1"
 )
 
 // ResolveReferences of this GKECluster

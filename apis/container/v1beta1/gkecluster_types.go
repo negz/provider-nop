@@ -17,8 +17,9 @@ limitations under the License.
 package v1beta1
 
 import (
-	runtimev1alpha1 "github.com/crossplane/crossplane-runtime/apis/core/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	runtimev1alpha1 "github.com/crossplane/crossplane-runtime/apis/core/v1alpha1"
 )
 
 // Cluster states.
@@ -391,7 +392,7 @@ type GKEClusterObservation struct {
 	PrivateClusterConfig *PrivateClusterConfigStatus `json:"privateClusterConfig,omitempty"`
 
 	// NOTE(hasheddan): node pools are modelled in status only because
-	// management of node pools is handled by the provider-gcp NodePool object.
+	// management of node pools is handled by the provider-nop NodePool object.
 
 	// NodePools: The node pools associated with this cluster.
 	// This field should not be set if "node_config" or "initial_node_count"

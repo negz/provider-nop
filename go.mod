@@ -1,16 +1,16 @@
-module github.com/crossplane/provider-gcp
+module github.com/crossplane/provider-nop
 
 go 1.13
 
 require (
 	cloud.google.com/go v0.56.0
 	cloud.google.com/go/storage v1.6.0
-	github.com/crossplane/crossplane v0.11.0-rc.0.20200518221518-c795a3103d7f
-	github.com/crossplane/crossplane-runtime v0.8.1-0.20200512204508-290de7349949
+	github.com/crossplane/crossplane v0.11.0
+	github.com/crossplane/crossplane-runtime v0.9.0
 	github.com/crossplane/crossplane-tools v0.0.0-20200412230150-efd0edd4565b
+	github.com/crossplane/provider-gcp v0.10.0 // indirect
 	github.com/google/go-cmp v0.4.0
 	github.com/googleapis/gax-go v1.0.3
-	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af // indirect
 	github.com/mitchellh/copystructure v1.0.0
 	github.com/onsi/gomega v1.8.1
 	github.com/pkg/errors v0.8.1

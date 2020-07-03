@@ -6,6 +6,6 @@ metadata:
 spec:
   credentialsSecretRef:
     namespace: crossplane-system
-    name: example-provider-gcp
+    name: example-provider-nop
     key: credentials.json
   projectID: crossplane-playground

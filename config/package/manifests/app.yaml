@@ -9,7 +9,7 @@ overview: |-
 
 # Markdown description of this entry
 readme: |
- `provider-gcp` is a Crossplane infrastructure provider for the [Google Cloud Platform](https://cloud.google.com).
+ `provider-nop` is a Crossplane infrastructure provider for the [Google Cloud Platform](https://cloud.google.com).
  The provider that is built from the source code in this repository can be installed into a Crossplane control plane and adds the following new functionality:
 
  * Custom Resource Definitions (CRDs) that model GCP infrastructure and services (e.g. [CloudSQL](https://cloud.google.com/sql/), [GKE clusters](https://cloud.google.com/kubernetes-engine/), etc.)
@@ -43,7 +43,7 @@ keywords:
 
 # Links to more information about the application (about page, source code, etc.)
 website: "https://crossplane.io"
-source: "https://github.com/crossplane/provider-gcp"
+source: "https://github.com/crossplane/provider-nop"
 
 # RBAC ClusterRoles will be generated permitting this package to use all verbs on all
 # resources in the groups listed below.

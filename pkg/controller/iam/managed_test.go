@@ -40,8 +40,8 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/crossplane-runtime/pkg/test"
 
-	"github.com/crossplane/provider-gcp/apis/iam/v1alpha1"
-	gcpv1alpha3 "github.com/crossplane/provider-gcp/apis/v1alpha3"
+	"github.com/crossplane/provider-nop/apis/iam/v1alpha1"
+	gcpv1alpha3 "github.com/crossplane/provider-nop/apis/v1alpha3"
 )
 
 const (

@@ -42,9 +42,9 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
 	"github.com/crossplane/crossplane-runtime/pkg/test"
 
-	"github.com/crossplane/provider-gcp/apis"
-	"github.com/crossplane/provider-gcp/apis/storage/v1alpha3"
-	gcpv1alpha3 "github.com/crossplane/provider-gcp/apis/v1alpha3"
+	"github.com/crossplane/provider-nop/apis"
+	"github.com/crossplane/provider-nop/apis/storage/v1alpha3"
+	gcpv1alpha3 "github.com/crossplane/provider-nop/apis/v1alpha3"
 )
 
 func init() {

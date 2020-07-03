@@ -1,6 +1,6 @@
 # Building and Installing the Crossplane GCP Provider
 
-`provider-gcp` is composed of a golang project and can be built directly with
+`provider-nop` is composed of a golang project and can be built directly with
 standard `golang` tools. We currently support two different platforms for
 building:
 

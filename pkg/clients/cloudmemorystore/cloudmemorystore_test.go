@@ -25,7 +25,7 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/pkg/meta"
 
-	"github.com/crossplane/provider-gcp/apis/cache/v1beta1"
+	"github.com/crossplane/provider-nop/apis/cache/v1beta1"
 )
 
 const (

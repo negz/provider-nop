@@ -7,74 +7,82 @@ YLW='\033[0;33m'
 GRN='\033[0;32m'
 RED='\033[0;31m'
 NOC='\033[0m' # No Color
-echo_info(){
+echo_info() {
     printf "\n${BLU}%s${NOC}" "$1"
 }
-echo_step(){
+echo_step() {
     printf "\n${BLU}>>>>>>> %s${NOC}\n" "$1"
 }
-echo_sub_step(){
+echo_sub_step() {
     printf "\n${BLU}>>> %s${NOC}\n" "$1"
 }
 
-echo_step_completed(){
+echo_step_completed() {
     printf "${GRN} [✔]${NOC}"
 }
 
-echo_success(){
+echo_success() {
     printf "\n${GRN}%s${NOC}\n" "$1"
 }
-echo_warn(){
+echo_warn() {
     printf "\n${YLW}%s${NOC}" "$1"
 }
-echo_error(){
+echo_error() {
     printf "\n${RED}%s${NOC}" "$1"
     exit 1
 }
 
 # k8s watchers
-wait_for_deployment_create(){
+wait_for_deployment_create() {
     local timeout=$1
     local counter=0
     echo -n "waiting for deployment create in $2..." >&2
-    while "${KUBECTL}" -n $2 get deployments -o yaml | grep -q  'items: \[\]'; do
-        if [ "$counter" -ge "$timeout" ]; then echo "TIMEOUT"; exit -1; else (( counter+=5 )); fi
+    while "${KUBECTL}" -n $2 get deployments -o yaml | grep -q 'items: \[\]'; do
+        if [ "$counter" -ge "$timeout" ]; then
+            echo "TIMEOUT"
+            exit -1
+        else ((counter += 5)); fi
         echo -n "." >&2
         sleep 5
     done
 }
 
-wait_for_deployment_delete(){
+wait_for_deployment_delete() {
     local timeout=$1
     local counter=0
     echo -n "waiting for deployment delete in $2..." >&2
-    while ! "${KUBECTL}" -n $2 get deployments -o yaml | grep -q  'items: \[\]'; do
-        if [ "$counter" -ge "$timeout" ]; then echo "TIMEOUT"; exit -1; else (( counter+=5 )); fi
+    while ! "${KUBECTL}" -n $2 get deployments -o yaml | grep -q 'items: \[\]'; do
+        if [ "$counter" -ge "$timeout" ]; then
+            echo "TIMEOUT"
+            exit -1
+        else ((counter += 5)); fi
         echo -n "." >&2
         sleep 5
     done
 }
 
-wait_for_pods_in_namespace(){
+wait_for_pods_in_namespace() {
     local timeout=$1
     shift
     namespace=$1
     shift
     arr=("$@")
     local counter=0
-    for i in "${arr[@]}";
-        do
-            echo -n "waiting for pod $i in namespace $namespace..." >&2
-            while ! ("${KUBECTL}" -n $namespace get pod $i) &>/dev/null; do
-                if [ "$counter" -ge "$timeout" ]; then echo "TIMEOUT"; exit -1; else (( counter+=5 )); fi
-                echo -n "." >&2
-                sleep 5
-            done
-            echo "FOUND POD!" >&2
+    for i in "${arr[@]}"; do
+        echo -n "waiting for pod $i in namespace $namespace..." >&2
+        while ! ("${KUBECTL}" -n $namespace get pod $i) &>/dev/null; do
+            if [ "$counter" -ge "$timeout" ]; then
+                echo "TIMEOUT"
+                exit -1
+            else ((counter += 5)); fi
+            echo -n "." >&2
+            sleep 5
         done
+        echo "FOUND POD!" >&2
+    done
 }
 
-check_deployments(){
+check_deployments() {
     for name in $1; do
         echo_sub_step "inspecting deployment '${name}'"
         local dep_stat=$("${KUBECTL}" -n "$2" get deployments/"${name}")
@@ -88,7 +96,7 @@ check_deployments(){
         fi
 
         echo_info "check if is ready"
-        IFS='/' read -ra ready_status_parts <<< "$(echo "$dep_stat" | awk ' FNR > 1 {print $2}')"
+        IFS='/' read -ra ready_status_parts <<<"$(echo "$dep_stat" | awk ' FNR > 1 {print $2}')"
         if (("${ready_status_parts[0]}" < "${ready_status_parts[1]}")); then
             echo "is not Ready"
             exit -1
@@ -99,7 +107,7 @@ check_deployments(){
     done
 }
 
-check_pods(){
+check_pods() {
     pods=$("${KUBECTL}" -n "$1" get pods)
     echo "$pods"
     while read -r pod_stat; do
@@ -115,7 +123,7 @@ check_pods(){
         fi
 
         echo_info "check if is ready"
-        IFS='/' read -ra ready_status_parts <<< "$(echo "$pod_stat" | awk '{print $2}')"
+        IFS='/' read -ra ready_status_parts <<<"$(echo "$pod_stat" | awk '{print $2}')"
         if (("${ready_status_parts[0]}" < "${ready_status_parts[1]}")); then
             echo_error "is not ready"
             exit -1
@@ -132,18 +140,18 @@ check_pods(){
         fi
 
         echo_info "check if has restarts"
-        if (( $(echo "$pod_stat" | awk '{print $4}') > 0 )); then
+        if (($(echo "$pod_stat" | awk '{print $4}') > 0)); then
             echo_error "has restarts"
             exit -1
         else
             echo_step_completed
         fi
         echo
-    done <<< "$(echo "$pods" | awk 'FNR>1')"
+    done <<<"$(echo "$pods" | awk 'FNR>1')"
 }
 
 # ------------------------------
-projectdir="$( cd "$( dirname "${BASH_SOURCE[0]}")"/../.. && pwd )"
+projectdir="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../.. && pwd)"
 
 # get the build environment variables from the special build.vars target in the main makefile
 eval $(make --no-print-directory -C ${projectdir} build.vars)
@@ -171,18 +179,18 @@ PACKAGE_IMAGE="${DOCKER_REGISTRY}/${PROJECT_NAME}:master"
 K8S_CLUSTER="${K8S_CLUSTER:-${BUILD_REGISTRY}-INTTESTS}"
 
 CROSSPLANE_NAMESPACE="crossplane-system"
-PACKAGE_NAME="provider-gcp"
+PACKAGE_NAME="provider-nop"
 PACKAGE_NAMESPACE="gcp"
 
 # cleanup on exit
 if [ "$skipcleanup" != true ]; then
-  function cleanup {
-    echo_step "Cleaning up..."
-    export KUBECONFIG=
-    "${KIND}" delete cluster --name="${K8S_CLUSTER}"
-  }
+    function cleanup() {
+        echo_step "Cleaning up..."
+        export KUBECONFIG=
+        "${KIND}" delete cluster --name="${K8S_CLUSTER}"
+    }
 
-  trap cleanup EXIT
+    trap cleanup EXIT
 fi
 
 echo_step "creating k8s cluster using kind"
@@ -236,7 +244,8 @@ sleep 30
 # install package into package namespace
 echo_step "installing ${PROJECT_NAME} into \"${PACKAGE_NAMESPACE}\" namespace"
 
-INSTALL_YAML="$( cat <<EOF
+INSTALL_YAML="$(
+    cat <<EOF
 apiVersion: v1
 kind: Namespace
 metadata:
