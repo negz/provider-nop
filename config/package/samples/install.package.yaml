@@ -3,6 +3,6 @@ apiVersion: packages.crossplane.io/v1alpha1
 kind: ClusterPackageInstall
 metadata:
   name: provider-nop
-  namespace: gcp
+  namespace: crossplane-system
 spec:
   package: "crossplane/provider-nop:master"

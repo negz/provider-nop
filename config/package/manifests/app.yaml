@@ -1,20 +1,16 @@
 # Human readable title of application.
-title: GCP Provider
+title: No-op Provider
 
-overviewShort: The GCP Crossplane provider enables infrastructure management for the Google Cloud Platform.
+overviewShort: The no-op provider does nothing.
 overview: |-
-  The Google Cloud Platform (GCP) Crossplane provider adds support for managing GCP infrastructure in Kubernetes.
-
-  Google Kubernetes Engine, Google Cloud SQL, Google Cloud Memorystore, and Google Cloud Storage resources can be provisioned, updated, and deleted by this provider.
+  The no-op provider provides a single managed resource that becomes available
+  as soon as it is created. It may be used to test composition.
 
 # Markdown description of this entry
 readme: |
+  The no-op provider provides a single managed resource that becomes available
+  as soon as it is created. It may be used to test composition.
  `provider-nop` is a Crossplane infrastructure provider for the [Google Cloud Platform](https://cloud.google.com).
- The provider that is built from the source code in this repository can be installed into a Crossplane control plane and adds the following new functionality:
-
- * Custom Resource Definitions (CRDs) that model GCP infrastructure and services (e.g. [CloudSQL](https://cloud.google.com/sql/), [GKE clusters](https://cloud.google.com/kubernetes-engine/), etc.)
- * Controllers to provision these resources in GCP based on the users desired state captured in CRDs they create
- * Implementations of Crossplane's portable resource abstractions, enabling GCP resources to fulfill a user's general need for cloud services
 
 # Maintainer names and emails.
 maintainers:
@@ -37,24 +33,18 @@ packageType: Provider
 
 # Keywords that describe this application and help search indexing
 keywords:
-- "google"
-- "gcp"
 - "infrastructure"
+- "nop"
+- "no-op"
+- "testing"
 
 # Links to more information about the application (about page, source code, etc.)
 website: "https://crossplane.io"
-source: "https://github.com/crossplane/provider-nop"
+source: "https://github.com/negz/provider-nop"
 
 # RBAC ClusterRoles will be generated permitting this package to use all verbs on all
 # resources in the groups listed below.
 permissionScope: Cluster
-dependsOn:
-- crd: '*.cache.crossplane.io/v1alpha1'
-- crd: '*.compute.crossplane.io/v1alpha1'
-- crd: '*.database.crossplane.io/v1alpha1'
-- crd: '*.core.crossplane.io/v1alpha1'
-- crd: '*.storage.crossplane.io/v1alpha1'
-- crd: '*.workload.crossplane.io/v1alpha1'
 
 # License SPDX name: https://spdx.org/licenses/
 license: Apache-2.0
