@@ -21,51 +21,14 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 
-	"github.com/crossplane/provider-nop/pkg/controller/cache"
-	"github.com/crossplane/provider-nop/pkg/controller/compute"
-	"github.com/crossplane/provider-nop/pkg/controller/container"
-	"github.com/crossplane/provider-nop/pkg/controller/database"
 	"github.com/crossplane/provider-nop/pkg/controller/iam"
-	"github.com/crossplane/provider-nop/pkg/controller/servicenetworking"
-	"github.com/crossplane/provider-nop/pkg/controller/storage"
 )
 
 // Setup creates all GCP controllers with the supplied logger and adds them to
 // the supplied manager.
 func Setup(mgr ctrl.Manager, l logging.Logger) error {
 	for _, setup := range []func(ctrl.Manager, logging.Logger) error{
-		cache.SetupCloudMemorystoreInstanceClaimScheduling,
-		cache.SetupCloudMemorystoreInstanceClaimDefaulting,
-		cache.SetupCloudMemorystoreInstanceClaimBinding,
-		cache.SetupCloudMemorystoreInstance,
-		compute.SetupGlobalAddress,
-		compute.SetupGKEClusterClaimScheduling,
-		compute.SetupGKEClusterClaimDefaulting,
-		compute.SetupGKEClusterClaimBinding,
-		compute.SetupGKEClusterTarget,
-		compute.SetupGKECluster,
-		compute.SetupNetwork,
-		compute.SetupSubnetwork,
-		container.SetupGKEClusterClaimScheduling,
-		container.SetupGKEClusterClaimDefaulting,
-		container.SetupGKEClusterClaimBinding,
-		container.SetupGKEClusterTarget,
-		container.SetupGKEClusterSecret,
-		container.SetupGKECluster,
-		container.SetupNodePool,
-		database.SetupPostgreSQLInstanceClaimScheduling,
-		database.SetupPostgreSQLInstanceClaimDefaulting,
-		database.SetupPostgreSQLInstanceClaimBinding,
-		database.SetupMySQLInstanceClaimScheduling,
-		database.SetupMySQLInstanceClaimDefaulting,
-		database.SetupMySQLInstanceClaimBinding,
-		database.SetupCloudSQLInstance,
 		iam.SetupServiceAccount,
-		servicenetworking.SetupConnection,
-		storage.SetupBucketClaimScheduling,
-		storage.SetupBucketClaimDefaulting,
-		storage.SetupBucketClaimBinding,
-		storage.SetupBucket,
 	} {
 		if err := setup(mgr, l); err != nil {
 			return err
