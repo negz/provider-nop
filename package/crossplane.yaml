@@ -1,0 +1,11 @@
+apiVersion: meta.pkg.crossplane.io/v1alpha1
+kind: Provider
+metadata:
+  name: provider-nop
+  annotations:
+    maintainer: Nic Cope <n+crossplane@rk0n.org>
+    source: github.com/negz/provider-nop
+    license: Apache-2.0
+spec:
+  controller:
+    image: crossplane/provider-nop-controller:VERSION
