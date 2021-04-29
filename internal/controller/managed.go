@@ -22,7 +22,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	runtimev1alpha1 "github.com/crossplane/crossplane-runtime/apis/core/v1alpha1"
+	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/pkg/event"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/meta"
@@ -64,7 +64,7 @@ func (c *connecter) Connect(ctx context.Context, mg resource.Managed) (managed.E
 			// If our managed resource has not been deleted we report that our
 			// pretend external resource exists and is up-to-date. This means
 			// we'll never call the CreateFn or UpdateFn.
-			mg.SetConditions(runtimev1alpha1.Available())
+			mg.SetConditions(xpv1.Available())
 			return managed.ExternalObservation{ResourceExists: true, ResourceUpToDate: true}, nil
 		},
 	}

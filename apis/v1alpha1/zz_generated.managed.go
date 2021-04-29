@@ -18,77 +18,60 @@ limitations under the License.
 
 package v1alpha1
 
-import (
-	runtimev1alpha1 "github.com/crossplane/crossplane-runtime/apis/core/v1alpha1"
-	corev1 "k8s.io/api/core/v1"
-)
-
-// GetBindingPhase of this NopResource.
-func (mg *NopResource) GetBindingPhase() runtimev1alpha1.BindingPhase {
-	return mg.Status.GetBindingPhase()
-}
-
-// GetClaimReference of this NopResource.
-func (mg *NopResource) GetClaimReference() *corev1.ObjectReference {
-	return mg.Spec.ClaimReference
-}
-
-// GetClassReference of this NopResource.
-func (mg *NopResource) GetClassReference() *corev1.ObjectReference {
-	return mg.Spec.ClassReference
-}
+import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 
 // GetCondition of this NopResource.
-func (mg *NopResource) GetCondition(ct runtimev1alpha1.ConditionType) runtimev1alpha1.Condition {
+func (mg *NopResource) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetProviderReference of this NopResource.
-func (mg *NopResource) GetProviderReference() *corev1.ObjectReference {
+// GetDeletionPolicy of this NopResource.
+func (mg *NopResource) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetProviderConfigReference of this NopResource.
+func (mg *NopResource) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+/*
+GetProviderReference of this NopResource.
+Deprecated: Use GetProviderConfigReference.
+*/
+func (mg *NopResource) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetReclaimPolicy of this NopResource.
-func (mg *NopResource) GetReclaimPolicy() runtimev1alpha1.ReclaimPolicy {
-	return mg.Spec.ReclaimPolicy
-}
-
 // GetWriteConnectionSecretToReference of this NopResource.
-func (mg *NopResource) GetWriteConnectionSecretToReference() *runtimev1alpha1.SecretReference {
+func (mg *NopResource) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetBindingPhase of this NopResource.
-func (mg *NopResource) SetBindingPhase(p runtimev1alpha1.BindingPhase) {
-	mg.Status.SetBindingPhase(p)
-}
-
-// SetClaimReference of this NopResource.
-func (mg *NopResource) SetClaimReference(r *corev1.ObjectReference) {
-	mg.Spec.ClaimReference = r
-}
-
-// SetClassReference of this NopResource.
-func (mg *NopResource) SetClassReference(r *corev1.ObjectReference) {
-	mg.Spec.ClassReference = r
-}
-
 // SetConditions of this NopResource.
-func (mg *NopResource) SetConditions(c ...runtimev1alpha1.Condition) {
+func (mg *NopResource) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetProviderReference of this NopResource.
-func (mg *NopResource) SetProviderReference(r *corev1.ObjectReference) {
+// SetDeletionPolicy of this NopResource.
+func (mg *NopResource) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetProviderConfigReference of this NopResource.
+func (mg *NopResource) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+/*
+SetProviderReference of this NopResource.
+Deprecated: Use SetProviderConfigReference.
+*/
+func (mg *NopResource) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetReclaimPolicy of this NopResource.
-func (mg *NopResource) SetReclaimPolicy(r runtimev1alpha1.ReclaimPolicy) {
-	mg.Spec.ReclaimPolicy = r
-}
-
 // SetWriteConnectionSecretToReference of this NopResource.
-func (mg *NopResource) SetWriteConnectionSecretToReference(r *runtimev1alpha1.SecretReference) {
+func (mg *NopResource) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

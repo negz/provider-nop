@@ -19,7 +19,7 @@ package v1alpha1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	runtimev1alpha1 "github.com/crossplane/crossplane-runtime/apis/core/v1alpha1"
+	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
 // NopResourceParameters does nothing.
@@ -30,12 +30,12 @@ type NopResourceObservation struct{}
 
 // NopResourceSpec defines the desired state of a NopResource.
 type NopResourceSpec struct {
-	runtimev1alpha1.ResourceSpec `json:",inline"`
+	xpv1.ResourceSpec `json:",inline"`
 }
 
 // NopResourceStatus represents the observed state of a NopResource.
 type NopResourceStatus struct {
-	runtimev1alpha1.ResourceStatus `json:",inline"`
+	xpv1.ResourceStatus `json:",inline"`
 }
 
 // +kubebuilder:object:root=true
