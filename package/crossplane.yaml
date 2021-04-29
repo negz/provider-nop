@@ -8,4 +8,4 @@ metadata:
     license: Apache-2.0
 spec:
   controller:
-    image: crossplane/provider-nop-controller:VERSION
+    image: negz/provider-nop-controller:VERSION
