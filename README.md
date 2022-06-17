@@ -1,5 +1,8 @@
 # provider-nop
 
+> This provider is archived. Use https://github.com/crossplane-contrib/provider-nop instead!
+
+
 `provider-nop` is a Crossplane infrastructure provider that does nothing. It
 provides one managed resource - a `NopResource` that does not orchestrate any
 external system and that becomes ready as soon as it is created.
